@@ -1,0 +1,4 @@
+Resources
+| where type == "microsoft.compute/disks"
+| where sku contains "Premium"
+| project name, type, resourceGroup, managedBy

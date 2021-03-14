@@ -1,0 +1,5 @@
+Resources
+| where type == "microsoft.network/networkinterfaces"
+| where properties['ipConfigurations'][0]['properties']['privateIPAllocationMethod'] != "Static"
+| extend VMid = properties.virtualMachine.id
+| project name, VMid

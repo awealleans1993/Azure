@@ -1,0 +1,10 @@
+Resources
+| where type == "microsoft.compute/virtualmachines"
+| extend name = properties.osProfile.computerName
+| extend hybridbenefit = properties.licenseType
+| extend os = properties.storageProfile.imageReference.offer
+| extend sku = properties.storageProfile.imageReference.sku
+| project VMname = name, os, sku, hybridbenefit
+| where isnotnull(VMname)
+| where hybridbenefit notcontains "windows"
+| where os contains "windows"

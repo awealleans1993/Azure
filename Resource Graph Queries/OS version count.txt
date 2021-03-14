@@ -1,0 +1,7 @@
+Resources
+| where type == "microsoft.compute/virtualmachines"
+| extend os = properties.storageProfile.imageReference.offer
+| extend sku = properties.storageProfile.imageReference.sku
+| project os, sku
+| summarize count() by tostring(os), tostring(sku)
+| order by tostring(os)

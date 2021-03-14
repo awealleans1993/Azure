@@ -1,0 +1,5 @@
+resources
+| where type == "microsoft.network/networkinterfaces"
+| extend CustomDNS = properties['dnsSettings']['dnsServers']
+| where CustomDNS != "[]"
+| project name, CustomDNS
