@@ -1,0 +1,10 @@
+ ResourceContainers
+ | where type == "microsoft.resources/subscriptions/resourcegroups"
+ | extend rgAndSub = strcat(resourceGroup, "--", subscriptionId)
+ | join kind=leftouter (
+     Resources
+     | extend rgAndSub = strcat(resourceGroup, "--", subscriptionId)
+     | summarize count() by rgAndSub
+ ) on rgAndSub
+ | where isnull(count_)
+ | project-away rgAndSub1, count_
